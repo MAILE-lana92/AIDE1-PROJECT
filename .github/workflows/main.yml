@@ -1,0 +1,53 @@
+name: AI-DE CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]  # Chạy khi push vào branch main
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov httpx  # Cài thêm công cụ test
+
+      - name: Run Tests with Coverage
+        run: |
+          # Chạy test và ép workflow thất bại nếu coverage dưới 80%
+          pytest --cov=src tests/ --cov-fail-under=80
+
+  continuous-deployment:
+    needs: continuous-integration # Chỉ chạy nếu test PASS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Auth Google Cloud
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}' # Mai cần add key này vào GitHub Secrets
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build and Push Docker Image
+        run: |
+          # Build image với tag là mã hash của lần commit (tránh trùng lặp)
+          IMAGE_NAME=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/sentiment-api:${{ github.sha }}
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME

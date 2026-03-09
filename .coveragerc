@@ -1,0 +1,8 @@
+[run]
+source = src
+omit =
+    src/train_logger.py
+    src/__init__.py
+
+[report]
+show_missing = True

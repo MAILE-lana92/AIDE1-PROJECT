@@ -1,0 +1,10 @@
+.terraform/
+*.tfstate*
+.terraform.lock.hcl
+mlruns/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+*.json
