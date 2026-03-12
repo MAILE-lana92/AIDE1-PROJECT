@@ -90,7 +90,7 @@ The deployment uses a Pridictor architecture. The model is wrapped in a FastAPI/
 
 ## Repository Structure
 
-
+```
 │   Dockerfile
 │   mlflow.db
 │   readme.md
@@ -114,6 +114,7 @@ The deployment uses a Pridictor architecture. The model is wrapped in a FastAPI/
 │   │   __init__.py
 │   └───__pycache__
 └───tests
+```
 
 ## Prerequisites
 | Tool | Version | Purpose |
