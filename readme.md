@@ -93,11 +93,17 @@ The deployment uses a Pridictor architecture. The model is wrapped in a FastAPI/
 ```
 
 │   Dockerfile
+
 │   mlflow.db
+
 │   readme.md
+
 │   requirements.txt
+
 |   ....
+
 ├───.dvc
+
 ├───.github
 ├───.pytest_cache
 ├───data
