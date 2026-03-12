@@ -92,36 +92,29 @@ The deployment uses a Pridictor architecture. The model is wrapped in a FastAPI/
 
 ```
 
-│   Dockerfile
-
-│   mlflow.db
-
-│   readme.md
-
-│   requirements.txt
-
-|   ....
-
-├───.dvc
-
-├───.github
-├───.pytest_cache
-├───data
-├───deployment│ 
-│   ├───.terraform│ 
-│   └───helm
-│       └───aide-api
-├───images
-├───mlruns
-├───models
-├───src
-│   │   main.py
-│   │   preprocess.py
-│   │   train_logger.py
-│   │   __init__.py
-│   └───__pycache__
-└───tests
-
+ .
+├── Dockerfile
+├── mlflow.db
+├── readme.md
+├── requirements.txt
+├── .dvc/
+├── .github/
+├── .pytest_cache/
+├── data/
+├── deployment/
+│   ├── .terraform/
+│   └── helm/
+│       └── aide-api/
+├── images/
+├── mlruns/
+├── models/
+├── src/
+│   ├── main.py
+│   ├── preprocess.py
+│   ├── train_logger.py
+│   ├── __init__.py
+│   └── __pycache__/
+└── tests/
 ```
 
 ## Prerequisites
