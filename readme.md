@@ -44,7 +44,7 @@ The system has been successfully deployed to Google Cloud production infrastruct
 | Property | Value |
 |----------| ----- |
 | Cluster | sentiment-analysis-cluster |
-| Region | asia-southeast1 |
+| Region | us-central1 |
 | Node Count | 3 (Autoscaling) |
 | Node Type | e2-standard-4 |
 | Status | Successfully Deployed |
@@ -91,8 +91,7 @@ The deployment uses a Pridictor architecture. The model is wrapped in a FastAPI/
 ## Repository Structure
 
 ```
-
- .
+.
 ├── Dockerfile
 ├── mlflow.db
 ├── readme.md
