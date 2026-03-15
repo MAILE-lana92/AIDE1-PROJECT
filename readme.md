@@ -64,7 +64,7 @@ The system has been successfully deployed to Google Cloud production infrastruct
 ## Introduction 
 This project implements a complete MLOps Pipeline to serve a Vietnamese Sentiment Analysis model. This goal was to move beyond local development to create a production-ready environment on Google Cloud that can handle real-time, scale automatically, and provide a clean API interface for end-users.
 
-## roblem Definition
+## Problem Definition
 ### Input Format
 The API accepts a raw string of text and return a sentiment classification.
 
