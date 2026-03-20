@@ -26,7 +26,7 @@
 ## System Architecture
 The system follow a cloud-native pattern, utilizing Istio for traffic management and Kserve for serverless model inferencing.
 
-Project pipeline
+### Project pipeline
 
 ```mermaid
     graph TD
@@ -82,8 +82,8 @@ Project pipeline
         GCR -->|Pull Image| KServe_Pod
 ```
 
-System Architect
-![System](images/System Architecture.png)
+### System Architect
+(images/System Architecture.png)
 ------
 
 
