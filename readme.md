@@ -26,15 +26,65 @@
 ## System Architecture
 The system follow a cloud-native pattern, utilizing Istio for traffic management and Kserve for serverless model inferencing.
 
+Project pipeline
+
 ```mermaid
-graph TD
-    User((User)) -->|REST Request| Istio[Istio Ingress Gateway]
-    Istio -->|Route| QP[Knative Queue Proxy]
-    subgraph Pod [InferenceService Pod]
-        QP -->|Localhost| MC[Model Container: BERT]
-    end
-    MC -->|JSON Response| User
+    graph TD
+        %% Styles
+        classDef infra fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+        classDef mesh fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
+        classDef app fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+        classDef dev fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+        classDef monitor fill:#fff9c4,stroke:#fbc02d,stroke-width:2px;
+
+        %% Phase 1: Dev + MLflow
+        subgraph Phase_1 [Phase 1: Model Dev & Tracking]
+            Notebook[Jupyter Notebook]:::dev
+            MLflow_Exp[(MLflow <br/> Tracking & Registry)]:::monitor
+            Notebook -->|Log Metrics & Save Model| MLflow_Exp
+        end
+
+        %% Phase 2: CI/CD
+        subgraph Phase_2 [Phase 2: CI/CD Pipeline]
+            GitHub[GitHub Actions]:::dev
+            GCR[Artifact Registry <br/> us-central1]:::infra
+            MLflow_Exp -->|Pull Best Model| GitHub
+            GitHub -->|Build Docker Image| GCR
+        end
+
+        %% Phase 3: Infrastructure
+        subgraph Phase_3 [Phase 3: IaC]
+            TF[Terraform <br/> Manual Plan/Apply]:::infra
+        end
+
+        %% Phase 4: Production + Monitoring
+        subgraph Phase_4 [Phase 4: GKE Production]
+            direction TB
+            Istio[Istio Ingress <br/> External IP]:::mesh
+            
+            subgraph KServe_Pod [InferenceService Pod]
+                direction LR
+                QP[Queue Proxy <br/> Sidecar: 8012]:::mesh
+                MC[BERT Model <br/> User: 8080]:::app
+                QP --> MC
+            end
+
+            %% Observability Tools
+            Prometheus[(Prometheus <br/> Metrics Collector)]:::monitor
+            Grafana[Grafana <br/> Dashboard]:::monitor
+
+            Istio --> QP
+            QP -->|Scrape Metrics| Prometheus
+            Prometheus --> Grafana
+        end
+
+        TF -->|Provision| Phase_4
+        GCR -->|Pull Image| KServe_Pod
 ```
+
+System Architect
+![System](images/System Architecture.png)
+------
 
 
 ## Production Deployment Status
