@@ -83,7 +83,7 @@ The system follow a cloud-native pattern, utilizing Istio for traffic management
 ```
 
 ### System Architect
-!(images/System_Architecture.png)
+![System_arch](./images/System_Architecture.png)
 ------
 
 
