@@ -18,6 +18,7 @@ resource "google_container_cluster" "primary" {
   }
 }
 
+
 # 2. Xuất tên cụm sau khi tạo xong
 output "kubernetes_cluster_name" {
   value = google_container_cluster.primary.name

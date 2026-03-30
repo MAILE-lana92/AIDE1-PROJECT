@@ -24,7 +24,7 @@ def health_check():
 async def predict(request: SentimentRequest):
     """
     Logic chính: Tiếp nhận text và gửi đến model hoặc xử lý trực tiếp.
-    Mai có thể thêm logic gọi tới KServe InferenceService tại đây.
+    có thể thêm logic gọi tới KServe InferenceService tại đây.
     """
     if not request.text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty")
