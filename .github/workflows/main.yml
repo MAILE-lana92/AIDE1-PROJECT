@@ -37,7 +37,7 @@ jobs:
       - name: Auth Google Cloud
         uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}' # Mai cần add key này vào GitHub Secrets
+          credentials_json: '${{ secrets.GCP_SA_KEY }}' # add into GitHub Secrets
 
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v1'

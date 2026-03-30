@@ -9,16 +9,16 @@ spec:
       #kserve-container
         image: us-central1-docker.pkg.dev/aide-final-project/my-repo/sentiment-api:951ef01c583c8ab967a26017519de35db70da69d
         ports:
-          - containerPort: 8080 # ĐỔI TỪ 8000 THÀNH 8080 ĐỂ KHỚP VỚI LOG
+          - containerPort: 8080 
         readinessProbe:
           tcpSocket:
-            port: 8080 # CŨNG ĐỔI THÀNH 8080
+            port: 8080 
           initialDelaySeconds: 30
           periodSeconds: 10
           failureThreshold: 10
         env:
           - name: STORAGE_URI
-            value: "gs://aide_bucket_1/sentiment_model" # Nếu Mai để model trong container thì bỏ dòng này
+            value: "gs://aide_bucket_1/sentiment_model" 
         resources:
           requests:
             cpu: "10m"      # Chỉ xin 1/100 nhân CPU (cực nhỏ)
