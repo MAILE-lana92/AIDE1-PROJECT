@@ -1,0 +1,28 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sentiment-model"
+spec:
+  predictor:
+    containers:
+      - name: sentiment-api
+      #kserve-container
+        image: us-central1-docker.pkg.dev/aide-final-project/my-repo/sentiment-api:951ef01c583c8ab967a26017519de35db70da69d
+        ports:
+          - containerPort: 8080 
+        readinessProbe:
+          tcpSocket:
+            port: 8080 
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 10
+        env:
+          - name: STORAGE_URI
+            value: "gs://aide_bucket_1/sentiment_model" 
+        resources:
+          requests:
+            cpu: "10m"      # Chỉ xin 1/100 nhân CPU (cực nhỏ)
+            memory: "256Mi" # Chỉ xin 256MB RAM để khởi động
+          limits:
+            cpu: "500m"     # Khi chạy có thể dùng tối đa 0.5 CPU
+            memory: "1Gi"   # Cho phép nở ra 1GB RAM để chứa model BERT 

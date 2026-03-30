@@ -1,0 +1,22 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sentiment-model"
+  namespace: "default"
+spec:
+  predictor:
+    minReplicas: 0 # Quan trọng: Giúp tiết kiệm ngân sách 100k của Mai
+    maxReplicas: 3
+    containers:
+      - name: kserve-container
+        image: us-central1-docker.pkg.dev/YOUR_PROJECT_ID/my-repo/sentiment-api:latest
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: "2Gi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"

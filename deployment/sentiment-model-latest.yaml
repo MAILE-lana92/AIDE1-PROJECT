@@ -1,0 +1,91 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"serving.kserve.io/v1beta1","kind":"InferenceService","metadata":{"annotations":{},"name":"sentiment-model","namespace":"default"},"spec":{"predictor":{"containers":[{"env":[{"name":"STORAGE_URI","value":"gs://aide_bucket_1/sentiment_model"}],"image":"us-central1-docker.pkg.dev/aide-final-project/cloud-run-source-deploy/aide-final-project/sentiment-api@sha256:6861c39cfd7645397713b76ef73a645c9448e13dfb03fc85d5df3ddad85c53d8","name":"kserve-container","ports":[{"containerPort":8080}],"readinessProbe":{"failureThreshold":10,"initialDelaySeconds":30,"periodSeconds":10,"tcpSocket":{"port":8080}},"resources":{"limits":{"cpu":"500m","memory":"1Gi"},"requests":{"cpu":"10m","memory":"256Mi"}}}]}}}
+  creationTimestamp: "2026-03-07T13:02:16Z"
+  finalizers:
+  - inferenceservice.finalizers
+  generation: 1
+  name: sentiment-model
+  namespace: default
+  resourceVersion: "1772888537505071002"
+  uid: b0f2c9ce-155e-4902-bb2a-b9b71662bede
+spec:
+  predictor:
+    containers:
+    - env:
+      - name: STORAGE_URI
+        value: gs://aide_bucket_1/sentiment_model
+      image: us-central1-docker.pkg.dev/aide-final-project/cloud-run-source-deploy/aide-final-project/sentiment-api@sha256:6861c39cfd7645397713b76ef73a645c9448e13dfb03fc85d5df3ddad85c53d8
+      name: kserve-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 10
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        tcpSocket:
+          port: 8080
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+status:
+  components:
+    predictor:
+      latestCreatedRevision: sentiment-model-predictor-00001
+  conditions:
+  - lastTransitionTime: "2026-03-07T13:02:16Z"
+    reason: Predictor ingress not created
+    status: Unknown
+    type: IngressReady
+  - lastTransitionTime: "2026-03-07T13:02:16Z"
+    reason: PredictorConfigurationReady not ready
+    severity: Info
+    status: Unknown
+    type: LatestDeploymentReady
+  - lastTransitionTime: "2026-03-07T13:02:17Z"
+    severity: Info
+    status: Unknown
+    type: PredictorConfigurationReady
+  - lastTransitionTime: "2026-03-07T13:02:17Z"
+    message: Configuration "sentiment-model-predictor" is waiting for a Revision to
+      become ready.
+    reason: RevisionMissing
+    status: Unknown
+    type: PredictorReady
+  - lastTransitionTime: "2026-03-07T13:02:17Z"
+    message: Configuration "sentiment-model-predictor" is waiting for a Revision to
+      become ready.
+    reason: RevisionMissing
+    severity: Info
+    status: Unknown
+    type: PredictorRouteReady
+  - lastTransitionTime: "2026-03-07T13:02:17Z"
+    reason: Predictor ingress not created
+    status: Unknown
+    type: Ready
+  - lastTransitionTime: "2026-03-07T13:02:16Z"
+    reason: PredictorRouteReady not ready
+    severity: Info
+    status: Unknown
+    type: RoutesReady
+  - lastTransitionTime: "2026-03-07T13:02:16Z"
+    severity: Info
+    status: "False"
+    type: Stopped
+  deploymentMode: Knative
+  modelStatus:
+    copies:
+      failedCopies: 0
+    states:
+      activeModelState: ""
+      targetModelState: Pending
+    transitionStatus: InProgress
+  observedGeneration: 1
